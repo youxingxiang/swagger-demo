@@ -1,0 +1,349 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swagger-Demo",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1"
+        }
+    ],
+    "paths": {
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "UnAuthorize"
+                ],
+                "summary": "user login",
+                "operationId": "933d6df586c6058a6427c0aa7cfac828",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "fail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRequestException"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "description": "token",
+                                            "format": "string",
+                                            "default": "20d338931e8d6bd9466edeba78ea7dce7c7bc01aa5cc5b4735691c50a2fe3228"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/register": {
+            "post": {
+                "tags": [
+                    "UnAuthorize"
+                ],
+                "summary": "user register",
+                "operationId": "5da9b83d0ad83ab2f2b3e69db72531a8",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "fail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRequestException"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "description": "token",
+                                            "format": "string",
+                                            "default": "20d338931e8d6bd9466edeba78ea7dce7c7bc01aa5cc5b4735691c50a2fe3228"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Authorize"
+                ],
+                "summary": "get user list",
+                "operationId": "33c14310f67e8717a2477b5a62dd3cc5",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "offset",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "offset",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "fail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRequestException"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "Authorize"
+                ],
+                "summary": "get user detail",
+                "operationId": "e4a83315d75d422dba40c7581a59e275",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "user Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "fail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRequestException"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "fail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiNotFoundException"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ApiNotFoundException": {
+                "properties": {
+                    "message": {
+                        "description": "The err message",
+                        "type": "string",
+                        "example": "Not Found"
+                    }
+                },
+                "type": "object"
+            },
+            "ApiRequestException": {
+                "properties": {
+                    "message": {
+                        "description": "The err message",
+                        "type": "string",
+                        "example": "Unauthenticated"
+                    }
+                },
+                "type": "object"
+            },
+            "ApiSystemException": {
+                "properties": {
+                    "message": {
+                        "description": "The err message",
+                        "type": "string",
+                        "example": "Unauthenticated"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequest": {
+                "properties": {
+                    "email": {
+                        "description": "email",
+                        "format": "string",
+                        "default": "xingxiang@spacebib.com"
+                    },
+                    "password": {
+                        "description": "password",
+                        "format": "string",
+                        "default": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "properties": {
+                    "name": {
+                        "description": "name",
+                        "format": "string",
+                        "default": "xingxiang"
+                    },
+                    "email": {
+                        "description": "email",
+                        "format": "string",
+                        "default": "xingxiang@spacebib.com"
+                    },
+                    "password": {
+                        "description": "password",
+                        "format": "string",
+                        "default": "password"
+                    },
+                    "password confirmation": {
+                        "description": "password confirmation",
+                        "format": "string",
+                        "default": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "UserResource": {
+                "description": "Class UserResource",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "format": "int64",
+                        "default": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "format": "string",
+                        "default": "xingxiang"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "email",
+                        "format": "string",
+                        "default": "xingxiang@test.com"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Bearer": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "Bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "UnAuthorize",
+            "description": "No user login required"
+        },
+        {
+            "name": "Authorize",
+            "description": "User login required"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
